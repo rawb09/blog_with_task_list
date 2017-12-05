@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+    <title>RobBlog</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+
+  </head>
+
+<!-- NAVIGATION BAR START -->
+<body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/welcome/index">Robs Blog</a>
+        </div>
+
+        <% if user_signed_in? %>
+        <div class="right">
+          <td><%= link_to 'Edit Profile', edit_user_registration_path, :class => 'navbar-link' %>
+            <font color="white">|</font>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></td>
+          <p>
+            <font color="white">Logged in as
+              <%= current_user.email %>
+            </font>
+          </p>
+        <% else %>
+          <div class="right">
+            <td><%= link_to 'Sign up', new_user_registration_path, :class => 'navbar-link' %>
+              <font color="white">|</font>
+              <td><%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %></td>
+              <p>
+                <font color="#cdcdcd">You are not signed in</font>
+              </p>
+              <% end %>
+            </div>
+
+            <ul class="nav navbar-nav">
+              <li class="active">
+                <a href="/welcome/index">Home</a>
+              </li>
+              <li>
+                <a href="/posts">Blog</a>
+              </li>
+              <li>
+                <a href="/todos/index">Tasks</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <!-- NAVIGATION BAR END -->
+
+</body>
+
+        <%= yield %>
+    </html>

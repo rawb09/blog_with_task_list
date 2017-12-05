@@ -1,0 +1,73 @@
+<style>
+  div.challenge {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+</style>
+<body>
+<center>
+  <div style="background:transparent !important" class="jumbotron">
+    <h1>Simple Task List</h1>
+    <p>Create a task by clicking below!</p>
+    <%= link_to "New Task", new_todo_path, :class => 'btn btn-primary btn-lg' %>
+  </center>
+</div>
+<div class="challenge">
+  <table class="table">
+    <thead class="thead-dark">
+      <td>
+        <h3>TASK</h3>
+      </td>
+      <td>
+        <h3>DESCRIPTION</h3>
+      </td>
+      <td>
+        <h3>MODIFY</h3>
+      </td>
+    </thead>
+  </div>
+  <% @todos.each do |todo| %>
+  <% if todo.user == current_user %>
+  <% if todo.completed? %>
+  <td>
+    <h4 style="opacity: 0.5; max-width: 500px">
+      <strike><%= link_to (todo.title).truncate(50), todo_path(todo.id) %></strike>
+    </h4>
+  </td>
+  <td>
+    <font color="red">
+      <p style="opacity: 0.2; max-width: 400px;"><%= (todo.description).truncate(55) %></p>
+    </font>
+    <p style="opacity: 0.5;">Completed
+      <%= time_ago_in_words(todo.completed_at) %>
+      ago
+    </p>
+  </td>
+  <td>
+    <%= link_to 'Uncomplete', uncomplete_todo_path(todo), method: :patch, :class => 'btn btn-warning' %>
+    <%= link_to "Edit", edit_todo_path(todo[:id]), :class => 'btn btn-primary' %>
+    <%= link_to "Delete", todo, method: :delete, data: { confirm: "You sure?" }, :class => 'btn btn-danger' %>
+  </td>
+</tr>
+<% else %>
+<td>
+  <h4 style="max-width: 500px;"><%= link_to (todo.title).truncate(50), todo_path(todo.id) %></h4>
+</td>
+<td>
+  <p style="max-width: 400px;"><%= (todo.description).truncate(55) %></p>
+  <p>Created
+    <%= time_ago_in_words(todo.created_at) %>
+    ago
+  </p>
+</td>
+<td style="max-width: 400px; width: 300px;">
+  <%= link_to "Complete", complete_todo_path(todo), method: :patch, :class => 'btn btn-success' %>
+  <%= link_to "Edit", edit_todo_path(todo[:id]), :class => 'btn btn-primary' %>
+  <%= link_to "Delete", todo, method: :delete, data: { confirm: "You sure?" }, :class => 'btn btn-danger'%>
+</td>
+</tr>
+</div>
+</body>
+<% end %>
+<% end %>
+<% end %>
