@@ -1,5 +1,3 @@
-require_relative 'boot'
-
 
 
 # Require the gems listed in Gemfile, including any gems
